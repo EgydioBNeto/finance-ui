@@ -1,4 +1,4 @@
-# Create React App
+# Finance-ui React App
 
 This project was bootstrapped with Create React App.
 

@@ -8,5 +8,3 @@ This project was bootstrapped with Create React App.
 - `npm test`: Launches the test runner in interactive watch mode.
 - `npm run build`: Builds the app for production to the `build` folder.
 - `npm run eject`: Removes the single build dependency from your project and copies all configuration files and dependencies into your project.
-
-Learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).

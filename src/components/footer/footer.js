@@ -3,7 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 function Footer() {
   return (
-    <footer className="footer">
+    <footer className="footer mt-5">
       <div className="container">
         <span className="text-muted">
           All Rights Reserved 2023 @

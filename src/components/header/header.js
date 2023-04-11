@@ -3,7 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 function Header() {
   return (
-    <div className="container">
+    <div className="container mb-5">
       <div className="row">
         <div className="col-md-12">
           <div className="jumbotron">

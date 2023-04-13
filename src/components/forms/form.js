@@ -12,9 +12,6 @@ function Form() {
   const [descriptionGain, setDescriptionGain] = useState("");
   const [descriptionDebit, setDescriptionDebit] = useState("");
 
-  console.log("gain", gains);
-  console.log("debit", debits);
-
   useEffect(() => {
     fetch(`${API_URL}/gain`)
       .then((response) => response.json())

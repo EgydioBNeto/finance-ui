@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const API_URL = "http://finance-kohl.vercel.app";
+const API_URL = "https://finance-kohl.vercel.app";
 
 function Form() {
   const [balance, setBalance] = useState(0);

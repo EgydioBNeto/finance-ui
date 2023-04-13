@@ -12,9 +12,6 @@ function Form() {
   const [descriptionGain, setDescriptionGain] = useState("");
   const [descriptionDebit, setDescriptionDebit] = useState("");
 
-  console.log("gain", gains);
-  console.log("debit", debits);
-
   useEffect(() => {
     fetch(`${API_URL}/gain`)
       .then((response) => response.json())
@@ -191,7 +188,7 @@ function Form() {
           <div className="col-md-12">
             <div className="card mt-3">
               <div className="card-header text-center">
-                <h4>Statement</h4>
+                <h4>Extract of Values</h4>
               </div>
               <div className="card-body text-center">
                 <table className="table table-striped">

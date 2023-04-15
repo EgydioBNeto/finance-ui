@@ -20,7 +20,7 @@ function Form() {
       .catch((error) => {
         console.log("Error fetching balance", error);
       });
-  }, [extract, gain, debit, descriptionGain, descriptionDebit]);
+  }, [gain, debit]);
 
   const handleGainSubmit = (event) => {
     event.preventDefault();
@@ -82,7 +82,7 @@ function Form() {
       .catch((error) => {
         console.log("Error fetching balance", error);
       });
-  }, [extract, gain, debit, descriptionGain, descriptionDebit]);
+  }, [gain, debit]);
 
   return (
     <div className="container">

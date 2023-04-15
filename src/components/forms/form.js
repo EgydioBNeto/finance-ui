@@ -1,48 +1,26 @@
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const API_URL = "https://finance-kohl.vercel.app";
+const API_URL = process.env.REACT_APP_API_URL;
 
 function Form() {
   const [balance, setBalance] = useState(0);
-  const [gains, getGain] = useState([]);
-  const [debits, getDebit] = useState([]);
+  const [extract, setExtract] = useState([]);
   const [gain, setGain] = useState("");
   const [debit, setDebit] = useState("");
   const [descriptionGain, setDescriptionGain] = useState("");
   const [descriptionDebit, setDescriptionDebit] = useState("");
 
   useEffect(() => {
-    fetch(`${API_URL}/gain`)
+    fetch(`${API_URL}/extract`)
       .then((response) => response.json())
       .then((data) => {
-        const gains = data.map((obj) => ({
-          date: obj.date,
-          description: obj.description,
-          value: obj.value,
-        }));
-        getGain(gains);
+        setExtract(data.extract);
       })
       .catch((error) => {
-        console.log("Error fetching gains", error);
+        console.log("Error fetching balance", error);
       });
-  }, [gain, debit, descriptionGain, descriptionDebit]);
-
-  useEffect(() => {
-    fetch(`${API_URL}/debit`)
-      .then((response) => response.json())
-      .then((data) => {
-        const debits = data.map((obj) => ({
-          date: obj.date,
-          description: obj.description,
-          value: obj.value,
-        }));
-        getDebit(debits);
-      })
-      .catch((error) => {
-        console.log("Error fetching debits", error);
-      });
-  }, [gain, debit, descriptionGain, descriptionDebit]);
+  }, [extract, gain, debit, descriptionGain, descriptionDebit]);
 
   const handleGainSubmit = (event) => {
     event.preventDefault();
@@ -104,7 +82,7 @@ function Form() {
       .catch((error) => {
         console.log("Error fetching balance", error);
       });
-  }, [gain, debit, descriptionGain, descriptionDebit]);
+  }, [extract, gain, debit, descriptionGain, descriptionDebit]);
 
   return (
     <div className="container">
@@ -200,24 +178,14 @@ function Form() {
                     </tr>
                   </thead>
                   <tbody>
-                    {gains.map((gain) => (
-                      <tr key={gain._id}>
-                        <td className="text-success">
-                          {new Date(gain.date).toLocaleDateString()}{" "}
-                          {new Date(gain.date).toLocaleTimeString()}
+                    {extract.map((extract) => (
+                      <tr key={extract._id}>
+                        <td>
+                          {new Date(extract.date).toLocaleDateString()}{" "}
+                          {new Date(extract.date).toLocaleTimeString()}
                         </td>
-                        <td className="text-success">{gain.description}</td>
-                        <td className="text-success">{gain.value}</td>
-                      </tr>
-                    ))}
-                    {debits.map((debit) => (
-                      <tr key={debit._id}>
-                        <td className="text-danger">
-                          {new Date(debit.date).toLocaleDateString()}{" "}
-                          {new Date(debit.date).toLocaleTimeString()}
-                        </td>
-                        <td className="text-danger">{debit.description}</td>
-                        <td className="text-danger">{debit.value}</td>
+                        <td>{extract.description}</td>
+                        <td>{extract.value}</td>
                       </tr>
                     ))}
                   </tbody>

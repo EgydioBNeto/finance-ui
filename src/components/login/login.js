@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const API_URL = "https://finance-kohl.vercel.app";
+const API_URL = process.env.REACT_APP_API_URL;
 
 function Login({ onLogin }) {
   const [login, setLogin] = useState("");

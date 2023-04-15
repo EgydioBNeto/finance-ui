@@ -172,6 +172,7 @@ function Form() {
                 <table className="table table-striped">
                   <thead>
                     <tr>
+                      <th>Type</th>
                       <th>Date</th>
                       <th>Description</th>
                       <th>Value</th>
@@ -180,12 +181,38 @@ function Form() {
                   <tbody>
                     {extract.map((extract) => (
                       <tr key={extract._id}>
-                        <td>
+                        <td
+                          style={{
+                            color: extract.type === "Gain" ? "green" : "red",
+                          }}
+                        >
+                          {extract.type}
+                        </td>
+                        <td
+                          style={{
+                            color: extract.type === "Gain" ? "green" : "red",
+                          }}
+                        >
                           {new Date(extract.date).toLocaleDateString()}{" "}
                           {new Date(extract.date).toLocaleTimeString()}
                         </td>
-                        <td>{extract.description}</td>
-                        <td>{extract.value}</td>
+                        <td
+                          style={{
+                            color: extract.type === "Gain" ? "green" : "red",
+                          }}
+                        >
+                          {extract.description}
+                        </td>
+                        <td
+                          style={{
+                            color: extract.type === "Gain" ? "green" : "red",
+                          }}
+                        >
+                          {extract.value.toLocaleString("pt-BR", {
+                            style: "currency",
+                            currency: "BRL",
+                          })}
+                        </td>
                       </tr>
                     ))}
                   </tbody>

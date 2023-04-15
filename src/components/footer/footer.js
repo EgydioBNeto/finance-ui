@@ -2,11 +2,12 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function Footer() {
+  const currentYear = new Date().getFullYear();
   return (
     <footer className="footer mt-5">
-      <div className="container">
+      <div className="container text-center">
         <span className="text-muted">
-          All Rights Reserved 2023 @
+          All Rights Reserved {currentYear} -{" "}
           <a
             target="_blank"
             rel="noreferrer"

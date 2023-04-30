@@ -7,6 +7,7 @@ function Login({ onLogin }) {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [token, setToken] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -21,10 +22,11 @@ function Login({ onLogin }) {
       });
 
       if (response.ok) {
-        // login successful
-        onLogin();
+        const data = await response.json();
+        setToken(data.token);
+        localStorage.setItem("token", data.token);
+        onLogin(token);
       } else {
-        // login failed
         const errorData = await response.json();
         setError(errorData.error);
       }

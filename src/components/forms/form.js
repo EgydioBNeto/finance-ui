@@ -183,7 +183,6 @@ function Form() {
                 <table className="table table-striped">
                   <thead>
                     <tr>
-                      <th>Type</th>
                       <th>Date</th>
                       <th>Description</th>
                       <th>Value</th>
@@ -192,13 +191,6 @@ function Form() {
                   <tbody>
                     {extract.map((extract) => (
                       <tr key={extract._id}>
-                        <td
-                          style={{
-                            color: extract.type === "Gain" ? "green" : "red",
-                          }}
-                        >
-                          {extract.type}
-                        </td>
                         <td
                           style={{
                             color: extract.type === "Gain" ? "green" : "red",

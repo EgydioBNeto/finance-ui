@@ -11,9 +11,10 @@ function Form() {
   const [descriptionGain, setDescriptionGain] = useState("");
   const [descriptionDebit, setDescriptionDebit] = useState("");
   const token = localStorage.getItem("token");
+  const user = localStorage.getItem("user");
 
   useEffect(() => {
-    fetch(`${API_URL}/extract`, {
+    fetch(`${API_URL}/extract?user=${user}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -25,7 +26,7 @@ function Form() {
       .catch((error) => {
         console.log("Error fetching balance", error);
       });
-  }, [gain, debit, token]);
+  }, [gain, debit, token, user]);
 
   const handleGainSubmit = (event) => {
     event.preventDefault();
@@ -39,7 +40,11 @@ function Form() {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ value: gainValue, description: descriptionGain }),
+      body: JSON.stringify({
+        value: gainValue,
+        description: descriptionGain,
+        user: user,
+      }),
     })
       .then((response) => response.json())
       .then((data) => {
@@ -67,6 +72,7 @@ function Form() {
       body: JSON.stringify({
         value: debitValue,
         description: descriptionDebit,
+        user: user,
       }),
     })
       .then((response) => response.json())
@@ -81,7 +87,7 @@ function Form() {
   };
 
   useEffect(() => {
-    fetch(`${API_URL}/balance`, {
+    fetch(`${API_URL}/balance?user=${user}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -93,7 +99,7 @@ function Form() {
       .catch((error) => {
         console.log("Error fetching balance", error);
       });
-  }, [gain, debit, token]);
+  }, [gain, debit, token, user]);
 
   return (
     <div className="container">

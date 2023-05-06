@@ -7,7 +7,7 @@ function Header() {
   };
 
   return (
-    <div className="container mb-5 my-4">
+    <div className="container mb-5 my-3">
       <div className="row">
         <div className="col-md-12">
           <div className="jumbotron">
@@ -17,9 +17,9 @@ function Header() {
               transactions and view your balance.
             </p>
             <button onClick={handleRefresh} className="btn btn-link">
-              Exit
+              {"<"} Exit
             </button>
-            <hr className="my-4" />
+            <hr className="my-1" />
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const API_URL = process.env.REACT_APP_API_URL;
@@ -7,9 +7,18 @@ function Register({ onRegister }) {
   const [register, setRegister] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const [token, setToken] = useState("");
   const [user, setUser] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+
+  useEffect(() => {
+    if (token && user) {
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", user);
+      onRegister(token, user);
+    }
+  }, [token, user, onRegister]);
 
   const handleSubmitRegister = async (event) => {
     event.preventDefault();
@@ -26,9 +35,10 @@ function Register({ onRegister }) {
         const data = await response.json();
         setToken(data.token);
         setUser(data.user);
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("user", data.user);
-        onRegister(token, user);
+        setSuccess("successfully registered");
+        setTimeout(() => {
+          handleRefresh();
+        }, 1000); // delay for 1 seconds
       } else {
         const errorData = await response.json();
         setError(errorData.error);
@@ -39,6 +49,9 @@ function Register({ onRegister }) {
     }
   };
 
+  const handleRefresh = () => {
+    window.location.reload();
+  };
   const toggleShowPassword = () => setShowPassword(!showPassword);
 
   return (
@@ -48,6 +61,7 @@ function Register({ onRegister }) {
           <form noValidate onSubmit={handleSubmitRegister}>
             <h1 className="h3 mb-3 font-weight-normal">Register</h1>
             {error && <div className="alert alert-danger">{error}</div>}
+            {success && <div className="alert alert-success">{success}</div>}
             <div className="form-group">
               <label htmlFor="login" hidden>
                 Login
@@ -95,7 +109,9 @@ function Register({ onRegister }) {
             </div>
           </form>
           <div className="my-1">
-            <button className="btn btn-link">Back</button>
+            <button onClick={handleRefresh} className="btn btn-link">
+              Back
+            </button>
           </div>
         </div>
       </div>

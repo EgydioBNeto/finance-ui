@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import bootstrap from "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -54,6 +55,13 @@ function Register({ onRegister }) {
   };
   const toggleShowPassword = () => setShowPassword(!showPassword);
 
+  const popoverTriggerList = document.querySelectorAll(
+    '[data-bs-toggle="popover"]'
+  );
+  [...popoverTriggerList].map(
+    (popoverTriggerEl) => new bootstrap.Popover(popoverTriggerEl)
+  );
+
   return (
     <div className="container my-5">
       <div className="row">
@@ -96,6 +104,17 @@ function Register({ onRegister }) {
                   onClick={toggleShowPassword}
                 >
                   {"View"}
+                </button>
+                <button
+                  type="button"
+                  tabindex="0"
+                  className="btn btn-sm btn-outline-secondary"
+                  data-bs-toggle="popover"
+                  data-bs-trigger="focus"
+                  data-bs-title="Strong Password"
+                  data-bs-content="A strong password should have at least 8 characters, including numbers, uppercase and lowercase letters, and symbols."
+                >
+                  ?
                 </button>
               </div>
             </div>

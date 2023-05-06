@@ -12,6 +12,11 @@ function Register({ onRegister }) {
   const [token, setToken] = useState("");
   const [user, setUser] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
+
+  const handleCheckboxChange = () => {
+    setIsChecked(!isChecked);
+  };
 
   useEffect(() => {
     if (token && user) {
@@ -122,6 +127,7 @@ function Register({ onRegister }) {
               <button
                 type="submit"
                 className="btn btn-lg btn-primary btn-block"
+                disabled={!isChecked}
               >
                 Sign up
               </button>
@@ -129,8 +135,34 @@ function Register({ onRegister }) {
           </form>
           <div className="my-1">
             <button onClick={handleRefresh} className="btn btn-link">
-              Back
+              {"< "}Back
             </button>
+          </div>
+          <hr />
+          <div className="form-group">
+            <div className="form-check form-check-inline">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                value=""
+                id="privacyPolicyCheckbox"
+                checked={isChecked}
+                onChange={handleCheckboxChange}
+              />
+              <label
+                className="form-check-label"
+                htmlFor="privacyPolicyCheckbox"
+              >
+                I agree with the{" "}
+                <a
+                  target="_blank"
+                  rel="noreferrer"
+                  href="https://www.freeprivacypolicy.com/live/1b6268a5-414d-400d-a449-230547541ea1"
+                >
+                  privacy policies
+                </a>
+              </label>
+            </div>
           </div>
         </div>
       </div>

@@ -12,6 +12,7 @@ function Form() {
   const [descriptionDebit, setDescriptionDebit] = useState("");
   const token = localStorage.getItem("token");
   const user = localStorage.getItem("user");
+  const [deleteRecord, setDeleteRecord] = useState("");
 
   useEffect(() => {
     fetch(`${API_URL}/extract?user=${user}`, {
@@ -26,7 +27,7 @@ function Form() {
       .catch((error) => {
         console.log("Error fetching balance", error);
       });
-  }, [gain, debit, token, user]);
+  }, [gain, debit, token, user, deleteRecord]);
 
   const handleGainSubmit = (event) => {
     event.preventDefault();
@@ -44,6 +45,7 @@ function Form() {
         value: gainValue,
         description: descriptionGain,
         user: user,
+        type: "gain",
       }),
     })
       .then((response) => response.json())
@@ -73,6 +75,7 @@ function Form() {
         value: debitValue,
         description: descriptionDebit,
         user: user,
+        type: "debit",
       }),
     })
       .then((response) => response.json())
@@ -100,6 +103,48 @@ function Form() {
         console.log("Error fetching balance", error);
       });
   }, [gain, debit, token, user]);
+
+  async function handleDelete(id) {
+    try {
+      // Try deleting from the gain endpoint first
+      const responseGain = await fetch(`${API_URL}/gain?id=${id}`, {
+        method: "DELETE",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      // If the delete was successful, return the response
+      if (responseGain.ok) {
+        setDeleteRecord(id);
+        return responseGain;
+      }
+
+      // If the delete from the gain endpoint fails, try the debit endpoint
+      const responseDebit = await fetch(`${API_URL}/debit?id=${id}`, {
+        method: "DELETE",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      // If the delete was successful, return the response
+      if (responseDebit.ok) {
+        setDeleteRecord(id);
+        return responseDebit;
+      }
+
+      // If neither endpoint worked, throw an error
+      throw new Error("Unable to delete the record");
+    } catch (err) {
+      console.error(err);
+      // Handle any errors
+    }
+  }
 
   return (
     <div className="container">
@@ -192,6 +237,7 @@ function Form() {
                       <th>Date</th>
                       <th>Description</th>
                       <th>Value</th>
+                      <th>Delete</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -221,6 +267,14 @@ function Form() {
                             style: "currency",
                             currency: "BRL",
                           })}
+                        </td>
+                        <td>
+                          <button
+                            className="btn btn-sm btn-secondary"
+                            onClick={() => handleDelete(extract._id)}
+                          >
+                            Delete
+                          </button>
                         </td>
                       </tr>
                     ))}
